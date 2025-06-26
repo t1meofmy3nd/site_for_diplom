@@ -10,7 +10,9 @@ Set the following variables before running the PHP scripts:
 - `DB_PASS` — password for the user
 
 For local development, you can export them in your shell or configure your web
-server to provide them.
+server to provide them. If no variables are supplied, `db.php` attempts to use
+`localhost` with the `medtech` database and connects as the `root` user with an
+empty password.
 # MedTech Store
 
 This project is a simple PHP application for an online medical technology store.
