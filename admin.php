@@ -15,6 +15,7 @@ $orders = $pdo->query("SELECT o.id, u.name, o.total_price, o.address, o.comment,
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Админ-панель — МедТех</title>
   <link rel="stylesheet" href="styles.css">
   <style>
