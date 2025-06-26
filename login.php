@@ -1,0 +1,45 @@
+<?php
+require 'db.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($email && $password) {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user'] = ['id' => $user['id'], 'name' => $user['name'], 'email' => $user['email']];
+            header("Location: index.html");
+            exit;
+        } else {
+            $error = "Неверный email или пароль.";
+        }
+    } else {
+        $error = "Пожалуйста, заполните все поля.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход — МедТех</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="auth-form">
+    <h2>Вход</h2>
+    <?php if (!empty($error)) echo "<p class='error'>$error</p>"; ?>
+    <form method="post">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Пароль" required>
+      <button type="submit" class="btn-primary">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="register.php">Зарегистрироваться</a></p>
+  </div>
+</body>
+</html>

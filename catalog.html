@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Каталог | МедТех</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo"><img src="../images/logo.png" alt="Логотип" /></div>
+  <nav>
+    <a href="../index.html">Главная</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="about.html">О нас</a>
+    <a href="cart.html">Корзина</a>
+  </nav>
+</header>
+
+<section class="filters-bar">
+  <input type="text" id="searchInput" placeholder="Поиск по названию" />
+  <select id="categoryFilter">
+    <option value="">Категория</option>
+    <option value="УЗИ">УЗИ</option>
+    <option value="Рентген">Рентген</option>
+    <option value="Дефибрилляторы">Дефибрилляторы</option>
+    <option value="ЭКГ">ЭКГ</option>
+    <option value="Мониторы">Мониторы</option>
+  </select>
+  <select id="brandFilter">
+    <option value="">Бренд</option>
+    <option value="Brand 1">Brand 1</option>
+    <option value="Brand 2">Brand 2</option>
+    <option value="Brand 3">Brand 3</option>
+    <option value="Brand 4">Brand 4</option>
+    <option value="Brand 5">Brand 5</option>
+    <option value="Brand 6">Brand 6</option>
+  </select>
+  <select id="priceFilter">
+    <option value="">Цена</option>
+    <option value="0-150000">до 150 000 ₽</option>
+    <option value="150000-250000">150 000 – 250 000 ₽</option>
+    <option value="250000-400000">250 000 – 400 000 ₽</option>
+  </select>
+  <button id="resetFilters">Сбросить</button>
+</section>
+
+<p id="resultCount" style="text-align: center; margin-top: -10px;"></p>
+<section id="product-list" class="products-grid" style="padding: 0 20px;"></section>
+
+<footer>
+  &copy; 2025 МедТех. Все права защищены.
+</footer>
+
+<script src="../products.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("searchInput");
+  const categoryFilter = document.getElementById("categoryFilter");
+  const brandFilter = document.getElementById("brandFilter");
+  const priceFilter = document.getElementById("priceFilter");
+  const resetBtn = document.getElementById("resetFilters");
+  const count = document.getElementById("resultCount");
+
+  function filterAndRender() {
+    let filtered = products;
+
+    const query = searchInput.value.toLowerCase();
+    const category = categoryFilter.value;
+    const brand = brandFilter.value;
+    const price = priceFilter.value;
+
+    if (query) filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
+    if (category) filtered = filtered.filter(p => p.category === category);
+    if (brand) filtered = filtered.filter(p => p.brand === brand);
+    if (price) {
+      const [min, max] = price.split("-").map(Number);
+      filtered = filtered.filter(p => p.price >= min && p.price <= max);
+    }
+
+    const container = document.getElementById("product-list");
+    container.innerHTML = "";
+    count.textContent = "Найдено: " + filtered.length;
+
+    filtered.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price.toLocaleString()} ₽</p>
+        <button onclick="addToCart(${product.id})">В корзину</button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  [searchInput, categoryFilter, brandFilter, priceFilter].forEach(el => {
+    el.addEventListener("input", filterAndRender);
+  });
+
+  resetBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    categoryFilter.value = "";
+    priceFilter.value = "";
+    brandFilter.value = "";
+    filterAndRender();
+  });
+
+  filterAndRender();
+});
+</script>
+
+</body>
+</html>
