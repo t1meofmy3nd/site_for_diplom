@@ -49,6 +49,7 @@ function renderCart() {
   if (cart.length === 0) {
     container.innerHTML = "<p style='padding: 20px;'>Корзина пуста</p>";
     totalEl.textContent = "";
+    localStorage.setItem("cart_total", 0);
     return;
   }
 
@@ -72,6 +73,7 @@ function renderCart() {
   });
 
   totalEl.textContent = "Сумма: " + total.toLocaleString() + " ₽";
+  localStorage.setItem("cart_total", total);
 }
 
 function removeItem(index) {

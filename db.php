@@ -4,10 +4,10 @@ if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
     exit("Доступ запрещен.");
 }
 
-$host = 'localhost';
-$dbname = 'medtech';
-$username = 'root';
-$password = ''; // или другой пароль, если используется на хостинге
+$host = getenv('DB_HOST');
+$dbname = getenv('DB_NAME');
+$username = getenv('DB_USER');
+$password = getenv('DB_PASS');
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

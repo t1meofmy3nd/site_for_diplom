@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
   <script>
-    const total = localStorage.getItem('cart_total') || 0;
-    document.getElementById('checkoutTotal').textContent = total + ' ₽';
+    const total = parseInt(localStorage.getItem('cart_total') || '0', 10);
+    document.getElementById('checkoutTotal').textContent = total.toLocaleString() + ' ₽';
     document.getElementById('orderTotal').value = total;
   </script>
 </body>

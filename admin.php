@@ -2,15 +2,15 @@
 require 'db.php';
 
 // Простейшая защита — логин через GET ?admin=1
-if (!isset($_GET['admin']) || $_GET['admin'] !== '1') {
-  die("Доступ запрещён.");
+if (!isset($_SESSION['admin'])) {
+    header('Location: admin_login.php');
+    exit;
 }
 
 // Заказы
-$orders = $pdo->query("SELECT o.id, u.name, o.total_price, o.address, o.comment, o.created_at 
+$orders = $pdo->query("SELECT o.id, u.name, o.total_price, o.address, o.comment, o.created_at
                        FROM orders o LEFT JOIN users u ON o.user_id = u.id ORDER BY o.id DESC")->fetchAll();
 ?>
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>

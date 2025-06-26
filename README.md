@@ -1,3 +1,16 @@
+# MedTech Web Application
+
+This project relies on environment variables for database connection settings.
+
+Set the following variables before running the PHP scripts:
+
+- `DB_HOST` — database server hostname
+- `DB_NAME` — name of the database
+- `DB_USER` — database user
+- `DB_PASS` — password for the user
+
+For local development, you can export them in your shell or configure your web
+server to provide them.
 # MedTech Store
 
 This project is a simple PHP application for an online medical technology store.
