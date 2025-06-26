@@ -32,6 +32,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  
+    <header>
+    <div class="logo">
+      <img src="images/logo.png" alt="Логотип" />
+    </div>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="about.html">О нас</a>
+      <a href="cart.html">Корзина</a>
+      <a href="login.php" class="login-link">Войти</a>
+      <a href="register.php" class="register-link">Зарегистрироваться</a>
+      <a href="logout.php" class="logout-link" style="display:none;">Выйти</a>
+    </nav>
+  </header>
+
   <div class="auth-form">
     <h2>Вход</h2>
     <?php if (!empty($error)) echo "<p class='error'>$error</p>"; ?>

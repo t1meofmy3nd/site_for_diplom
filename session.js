@@ -5,6 +5,7 @@ function updateAuthLinks(basePath = '') {
       if (data.loggedIn) {
         document.querySelectorAll('.logout-link').forEach(el => el.style.display = 'inline');
         document.querySelectorAll('.login-link').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.register-link').forEach(el => el.style.display = 'none');
       }
     })
     .catch(() => {});
