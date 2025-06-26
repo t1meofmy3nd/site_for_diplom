@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
+
     <header>
     <div class="logo">
       <img src="images/logo.png" alt="Логотип" />
@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav>
       <a href="index.html">Главная</a>
       <a href="catalog.html">Каталог</a>
+      <a href="services.html">Услуги</a>
       <a href="about.html">О нас</a>
       <a href="cart.html">Корзина</a>
       <a href="login.php" class="login-link">Войти</a>

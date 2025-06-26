@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id INT,
     total_price DECIMAL(10,2),
     address TEXT,
+    phone VARCHAR(20),
+    payment_method VARCHAR(20),
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL

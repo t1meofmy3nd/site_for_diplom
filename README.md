@@ -39,3 +39,8 @@ Navigate to the project directory and run the built-in PHP server:
 php -S localhost:8000
 ```
 The site will be available at [http://localhost:8000](http://localhost:8000).
+
+## Pages
+- `index.html` — главная страница с популярными товарами
+- `catalog.html` — каталог медицинского оборудования
+- `services.html` — описание доступных услуг
