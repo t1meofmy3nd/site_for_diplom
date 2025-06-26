@@ -18,6 +18,7 @@
     <a href="catalog.html">Каталог</a>
     <a href="about.html">О нас</a>
     <a href="cart.html">Корзина</a>
+    <a href="#contact">Контакты</a>
     <a href="login.php" class="login-link">Войти</a>
     <a href="register.php" class="register-link">Зарегистрироваться</a>
     <a href="logout.php" class="logout-link" style="display:none;">Выйти</a>
@@ -61,8 +62,21 @@
   <a href="about.html" class="cta-button" style="margin-top: 20px;">Узнать больше</a>
 </section>
 
+<section id="contact" class="contact">
+  <h2 style="text-align:center; font-size: 2rem; margin-bottom: 20px;">Связаться с нами</h2>
+  <p style="text-align:center; margin-bottom: 20px;">Оставьте заявку и мы свяжемся с вами в ближайшее время.</p>
+  <form class="contact-form" style="max-width:500px;margin:0 auto;text-align:center;">
+    <input type="text" placeholder="Ваше имя" required style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:8px;" />
+    <input type="email" placeholder="Email для связи" required style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:8px;" />
+    <textarea rows="4" placeholder="Сообщение" required style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:8px;"></textarea>
+    <button type="submit" class="cta-button" style="width:100%;">Отправить</button>
+  </form>
+</section>
+
 <footer>
-  &copy; 2025 МедТех. Все права защищены.
+  <p>&copy; 2025 МедТех. Все права защищены.</p>
+  <p>Телефон: 8 (800) 123-45-67 | Email: <a href="mailto:info@medtech.ru">info@medtech.ru</a></p>
+</footer>
 </footer>
 
 <script src="products.js"></script>
@@ -81,6 +95,14 @@
       `;
       container.appendChild(card);
     });
+
+     const form = document.querySelector('.contact-form');
+    if (form) {
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        form.innerHTML = '<p style="color:green;">Спасибо! Мы свяжемся с вами.</p>';
+      });
+    }
   });
 </script>
 <script src="session.js"></script>

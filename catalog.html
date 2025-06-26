@@ -34,14 +34,10 @@
     <option value="ЭКГ">ЭКГ</option>
     <option value="Мониторы">Мониторы</option>
   </select>
-  <select id="brandFilter">
-    <option value="">Бренд</option>
-    <option value="Brand 1">Brand 1</option>
-    <option value="Brand 2">Brand 2</option>
-    <option value="Brand 3">Brand 3</option>
-    <option value="Brand 4">Brand 4</option>
-    <option value="Brand 5">Brand 5</option>
-    <option value="Brand 6">Brand 6</option>
+  <select id="sortSelect">
+    <option value="">Сортировка</option>
+    <option value="priceAsc">Цена: по возрастанию</option>
+    <option value="priceDesc">Цена: по убыванию</option>
   </select>
   <select id="priceFilter">
     <option value="">Цена</option>
@@ -64,7 +60,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   const categoryFilter = document.getElementById("categoryFilter");
-  const brandFilter = document.getElementById("brandFilter");
+  const sortSelect = document.getElementById("sortSelect");
   const priceFilter = document.getElementById("priceFilter");
   const resetBtn = document.getElementById("resetFilters");
   const count = document.getElementById("resultCount");
@@ -74,16 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const query = searchInput.value.toLowerCase();
     const category = categoryFilter.value;
-    const brand = brandFilter.value;
+    const sort = sortSelect.value;
     const price = priceFilter.value;
 
     if (query) filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
     if (category) filtered = filtered.filter(p => p.category === category);
-    if (brand) filtered = filtered.filter(p => p.brand === brand);
+    
     if (price) {
       const [min, max] = price.split("-").map(Number);
       filtered = filtered.filter(p => p.price >= min && p.price <= max);
     }
+
+    if (sort === "priceAsc") filtered.sort((a, b) => a.price - b.price);
+    if (sort === "priceDesc") filtered.sort((a, b) => b.price - a.price);
 
     const container = document.getElementById("product-list");
     container.innerHTML = "";
@@ -102,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  [searchInput, categoryFilter, brandFilter, priceFilter].forEach(el => {
+  [searchInput, categoryFilter, priceFilter, sortSelect].forEach(el => {
     el.addEventListener("input", filterAndRender);
   });
 
@@ -110,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.value = "";
     categoryFilter.value = "";
     priceFilter.value = "";
-    brandFilter.value = "";
+    sortSelect.value = "";
     filterAndRender();
   });
 

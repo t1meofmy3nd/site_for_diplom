@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin'])) {
 }
 
 // Заказы
-$orders = $pdo->query("SELECT o.id, u.name, o.total_price, o.address, o.comment, o.created_at
+$orders = $pdo->query("SELECT o.id, u.name, o.total_price, o.address, o.phone, o.payment_method, o.comment, o.created_at
                        FROM orders o LEFT JOIN users u ON o.user_id = u.id ORDER BY o.id DESC")->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -34,6 +34,8 @@ $orders = $pdo->query("SELECT o.id, u.name, o.total_price, o.address, o.comment,
           <th>Пользователь</th>
           <th>Сумма</th>
           <th>Адрес</th>
+          <th>Телефон</th>
+          <th>Оплата</th>
           <th>Комментарий</th>
           <th>Дата</th>
         </tr>
@@ -45,6 +47,8 @@ $orders = $pdo->query("SELECT o.id, u.name, o.total_price, o.address, o.comment,
             <td><?= htmlspecialchars($order['name'] ?? '-') ?></td>
             <td><?= $order['total_price'] ?> ₽</td>
             <td><?= nl2br(htmlspecialchars($order['address'])) ?></td>
+            <td><?= htmlspecialchars($order['phone']) ?></td>
+            <td><?= htmlspecialchars($order['payment_method']) ?></td>
             <td><?= nl2br(htmlspecialchars($order['comment'])) ?></td>
             <td><?= $order['created_at'] ?></td>
           </tr>

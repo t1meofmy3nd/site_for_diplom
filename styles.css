@@ -283,6 +283,50 @@ footer {
   margin-bottom: 1rem;
 }
 
+/* Checkout styles */
+.checkout {
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+}
+
+.checkout label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.checkout textarea,
+.checkout input,
+.checkout select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+.order-summary {
+  margin-bottom: 1rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+ 
+.contact {
+  background: var(--bg);
+  padding: 60px 20px;
+}
+
+.contact-form button {
+  margin-top: 10px;
+}
+
 /* Cart page */
 .cart-container {
   max-width: 900px;
