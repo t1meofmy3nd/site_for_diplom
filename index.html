@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>МедТех — Продажа медицинского оборудования</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="images/logo.png" alt="Логотип" />
+  </div>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="about.html">О нас</a>
+    <a href="cart.html">Корзина</a>
+    <a href="login.php">Вход</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Продажа медицинского оборудования</h1>
+    <p>Решения для клиник и медицинских центров по всей России</p>
+    <a href="pages/catalog.html" class="cta-button">Перейти в каталог</a>
+  </div>
+</section>
+
+<section>
+  <h2 style="text-align:center; font-size: 2rem; margin: 40px 0 20px;">Наши преимущества</h2>
+  <div class="features">
+    <div class="feature-card">
+      <h3>Сертифицированные поставки</h3>
+      <p>Официальные поставки с регистрацией и гарантией</p>
+    </div>
+    <div class="feature-card">
+      <h3>Работаем по всей России</h3>
+      <p>Оперативная доставка и обслуживание в любой регион</p>
+    </div>
+    <div class="feature-card">
+      <h3>Поддержка и сервис</h3>
+      <p>Сопровождение, консультации и постгарантийное обслуживание</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 style="text-align:center; font-size: 2rem; margin: 60px 0 20px;">Популярные товары</h2>
+  <div id="popular-products" class="products-grid" style="padding: 0 20px;"></div>
+</section>
+
+<section style="background: #eef3f8; padding: 60px 20px; text-align: center;">
+  <h2 style="font-size: 2rem;">О компании</h2>
+  <p style="max-width: 700px; margin: 20px auto;">Компания МедТех — поставщик профессионального медицинского оборудования по всей России. Мы обеспечиваем государственные и частные клиники современными аппаратами, гарантией и поддержкой.</p>
+  <a href="pages/about.html" class="cta-button" style="margin-top: 20px;">Узнать больше</a>
+</section>
+
+<footer>
+  &copy; 2025 МедТех. Все права защищены.
+</footer>
+
+<script src="products.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("popular-products");
+    const popular = products.slice(0, 4);
+    popular.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price.toLocaleString()} ₽</p>
+        <button onclick="addToCart(${product.id})">В корзину</button>
+      `;
+      container.appendChild(card);
+    });
+  });
+</script>
+
+</body>
+</html>
