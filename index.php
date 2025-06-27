@@ -11,29 +11,13 @@
 </head>
 <body>
 
-<header>
-  <a href="index.html" class="logo">
-    <img src="images/logo.png" alt="МедТех" />
-  </a>
-  <button class="menu-toggle" aria-label="Меню"><i class="fa-solid fa-bars"></i></button>
-  <nav>
-    <a href="index.html" class="active">Главная</a>
-    <a href="catalog.html">Каталог</a>
-    <a href="services.html">Услуги</a>
-    <a href="about.html">О нас</a>
-    <a href="cart.html" class="cart-link"><i class="fa-solid fa-cart-shopping"></i><span class="cart-count">0</span></a>
-    <a href="profile.php" class="account-link" style="display:none;"><i class="fa-solid fa-user"></i> Личный кабинет</a>
-    <a href="login.php" class="login-link"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
-    <a href="register.php" class="register-link"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
-    <a href="logout.php" class="logout-link" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Выход</a>
-  </nav>
-</header>
+<?php include 'header.php'; ?>
 
 <section class="hero">
   <div class="hero-content">
     <h1>Современное медицинское оборудование</h1>
     <p>Решения для клиник и медицинских центров по всей России</p>
-    <a href="catalog.html" class="cta-button">Перейти в каталог</a>
+    <a href="catalog.php" class="cta-button">Перейти в каталог</a>
   </div>
 </section>
 
@@ -89,7 +73,7 @@
 <section class="about-short">
   <h2>О компании</h2>
   <p>Компания МедТех обеспечивает российские клиники современными аппаратами и сервисом. Наша миссия — сделать передовые технологии доступными в каждом регионе.</p>
-  <a href="about.html" class="cta-button">Узнать больше</a>
+  <a href="about.php" class="cta-button">Узнать больше</a>
 </section>
 
 <section class="reviews">

@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("INSERT INTO orders (user_id, total_price, address, phone, payment_method, comment) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([$user_id, $total, $address, $phone, $payment_method, $comment]);
     unset($_SESSION['csrf_token']);
-    header("Location: thankyou.html");
+    header("Location: thankyou.php");
     exit;
   } else {
     $error = "Заполните все обязательные поля и убедитесь, что корзина не пуста.";

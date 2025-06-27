@@ -10,23 +10,7 @@
 </head>
 <body>
 
-<header>
-  <a href="index.html" class="logo">
-    <img src="images/logo.png" alt="МедТех" />
-  </a>
-  <button class="menu-toggle" aria-label="Меню"><i class="fa-solid fa-bars"></i></button>
-  <nav>
-    <a href="index.html">Главная</a>
-    <a href="catalog.html">Каталог</a>
-    <a href="about.html" class="active">О нас</a>
-    <a href="services.html">Услуги</a>
-    <a href="cart.html" class="cart-link"><i class="fa-solid fa-cart-shopping"></i><span class="cart-count">0</span></a>
-    <a href="profile.php" class="account-link" style="display:none;"><i class="fa-solid fa-user"></i> Личный кабинет</a>
-    <a href="login.php" class="login-link"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
-    <a href="register.php" class="register-link"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
-    <a href="logout.php" class="logout-link" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Выход</a>
-  </nav>
-</header>
+<?php include 'header.php'; ?>
 
 <section style="background: url('images/about-section.jpg') center/cover no-repeat; height: 300px; display: flex; align-items: center; justify-content: center; color: white;">
   <h1 style="font-size: 2.5rem; background: rgba(0,0,0,0.5); padding: 10px 30px; border-radius: 10px;">О компании МедТех</h1>

@@ -30,31 +30,6 @@ CREATE TABLE IF NOT EXISTS products (
     image_03 VARCHAR(255)
 );
 
--- Таблица корзины
-CREATE TABLE IF NOT EXISTS cart (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    pid INT,
-    name VARCHAR(100) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    quantity INT,
-    image VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (pid) REFERENCES products(id) ON DELETE CASCADE
-);
-
--- Таблица избранного
-CREATE TABLE IF NOT EXISTS wishlist (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    pid INT,
-    name VARCHAR(100) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    image VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (pid) REFERENCES products(id) ON DELETE CASCADE
-);
-
 -- Таблица заказов (исправленная)
 CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
