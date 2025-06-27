@@ -1,7 +1,14 @@
 <?php
 require 'db.php';
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'] ?? '')) {
+        die('Неверный CSRF токен.');
+    }
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -11,8 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
         try {
             $stmt->execute([$name, $email, $password_hash]);
+            session_regenerate_id(true);
             $_SESSION['user'] = ['name' => $name, 'email' => $email];
             header("Location: index.html");
+            unset($_SESSION['csrf_token']);
             exit;
         } catch (PDOException $e) {
             $error = "Email уже используется.";
@@ -33,26 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-    <header>
-    <div class="logo">
-      <img src="images/logo.png" alt="Логотип" />
-    </div>
-    <nav>
-      <a href="index.html">Главная</a>
-      <a href="catalog.html">Каталог</a>
-      <a href="services.html">Услуги</a>
-      <a href="about.html">О нас</a>
-      <a href="cart.html">Корзина</a>
-      <a href="login.php" class="login-link">Войти</a>
-      <a href="register.php" class="register-link">Зарегистрироваться</a>
-      <a href="logout.php" class="logout-link" style="display:none;">Выйти</a>
-    </nav>
-  </header>
+    <?php include 'header.php'; ?>
 
   <div class="auth-form">
     <h2>Регистрация</h2>
     <?php if (!empty($error)) echo "<p class='error'>$error</p>"; ?>
     <form method="post">
+      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
       <input type="text" name="name" placeholder="Имя" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Пароль" required>

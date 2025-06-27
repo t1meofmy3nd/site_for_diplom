@@ -1,12 +1,19 @@
 <?php
 require 'db.php';
 
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 if (!isset($_SESSION['user'])) {
   header('Location: login.php');
   exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (!hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'] ?? '')) {
+    die('Неверный CSRF токен.');
+  }
   $user_id = $_SESSION['user']['id'];
   $total = $_POST['total'] ?? 0;
   $address = trim($_POST['address'] ?? '');
@@ -17,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($total > 0 && $address && $phone && $payment_method) {
     $stmt = $pdo->prepare("INSERT INTO orders (user_id, total_price, address, phone, payment_method, comment) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([$user_id, $total, $address, $phone, $payment_method, $comment]);
+    unset($_SESSION['csrf_token']);
     header("Location: thankyou.html");
     exit;
   } else {
@@ -35,21 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="images/logo.png" alt="Логотип" />
-    </div>
-    <nav>
-      <a href="index.html">Главная</a>
-      <a href="catalog.html">Каталог</a>
-      <a href="services.html">Услуги</a>
-      <a href="about.html">О нас</a>
-      <a href="cart.html">Корзина</a>
-      <a href="login.php" class="login-link">Войти</a>
-      <a href="register.php" class="register-link">Зарегистрироваться</a>
-      <a href="logout.php" class="logout-link" style="display:none;">Выйти</a>
-    </nav>
-  </header>
+<?php include 'header.php'; ?>
 
   <div class="checkout">
     <h2>Оформление заказа</h2>
@@ -58,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (!empty($error)) echo "<p class='error'>$error</p>"; ?>
     <form method="post">
       <label>Телефон для связи:<br>
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
         <input type="tel" name="phone" required>
       </label>
       <label>Адрес доставки:<br>

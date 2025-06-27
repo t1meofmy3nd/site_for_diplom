@@ -44,3 +44,6 @@ The site will be available at [http://localhost:8000](http://localhost:8000).
 - `index.html` — главная страница с популярными товарами
 - `catalog.html` — каталог медицинского оборудования
 - `services.html` — описание доступных услуг
+
+## Environment setup
+Create a copy of `.env.example` named `.env` and update the variables as needed for your environment. The application reads these variables in `db.php` when establishing the database connection.

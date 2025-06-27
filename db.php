@@ -16,5 +16,13 @@ try {
     die("Ошибка подключения к базе данных: " . $e->getMessage());
 }
 
+$secure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'httponly' => true,
+    'secure' => $secure,
+    'samesite' => 'Lax'
+]);
 session_start();
 ?>
