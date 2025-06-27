@@ -2,6 +2,7 @@
   <div class="logo">
     <img src="images/logo.png" alt="Логотип" />
   </div>
+  <button class="menu-toggle" aria-label="Меню">&#9776;</button>
   <nav>
     <a href="index.html">Главная</a>
     <a href="catalog.html">Каталог</a>

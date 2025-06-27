@@ -55,5 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
     <p>Нет аккаунта? <a href="register.php">Зарегистрироваться</a></p>
   </div>
+  <script src="header.js"></script>
+  <script src="session.js"></script>
 </body>
 </html>

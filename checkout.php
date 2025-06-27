@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     document.getElementById('checkoutTotal').textContent = total.toLocaleString() + ' ₽';
     document.getElementById('orderTotal').value = total;
   </script>
+  <script src="header.js"></script>
   <script src="session.js"></script>
 </body>
 </html>
