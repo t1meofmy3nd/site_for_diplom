@@ -54,3 +54,7 @@ CREATE TABLE IF NOT EXISTS messages (
     message TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
+-- Создание начального администратора
+INSERT INTO admins (username, password) VALUES
+  ('admin', '$2y$10$abcdefghijklmnopqrstuuEZ4tpXm4W5SeJkDbuNdfJ.CF0.Wc2V2');
