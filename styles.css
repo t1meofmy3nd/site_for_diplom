@@ -125,6 +125,7 @@ nav a .cart-count {
 
 .cta-button:hover {
   background: linear-gradient(to right, #0096c7, var(--accent));
+  transform: translateY(-2px);
 }
 
 .features {
@@ -660,4 +661,139 @@ footer {
 .table th {
   background: var(--bg);
   text-align: left;
+}
+
+/* Home page enhancements */
+.services {
+  padding: 60px 20px;
+  text-align: center;
+}
+.services h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.benefits-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+.benefits-section h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.benefit-item {
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  transition: var(--transition);
+}
+.benefit-item:hover {
+  transform: translateY(-4px);
+}
+.benefit-item i {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.popular {
+  padding: 60px 20px;
+  text-align: center;
+}
+.popular h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.about-short {
+  background: #eef3f8;
+  padding: 60px 20px;
+  text-align: center;
+}
+.about-short h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.about-short p {
+  max-width: 700px;
+  margin: 0 auto 20px;
+}
+
+.reviews {
+  padding: 60px 20px;
+  text-align: center;
+}
+.reviews-carousel {
+  max-width: 600px;
+  margin: 40px auto 0;
+  position: relative;
+}
+.review-card {
+  display: none;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 30px;
+  animation: fade 0.5s ease-in-out;
+}
+.review-card.active {
+  display: block;
+}
+.review-card h4 {
+  margin-top: 10px;
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.contact h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.contact p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.contact-form {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+}
+.contact-form button {
+  width: 100%;
+}
+.success {
+  color: green;
+}
+
+.cta-button {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .benefits {
+    grid-template-columns: 1fr;
+  }
 }
