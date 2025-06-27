@@ -61,8 +61,8 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id INT,
     total_price DECIMAL(10,2) NOT NULL,
     address TEXT NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    payment_method VARCHAR(50) NOT NULL,
+    ALTER TABLE orders ADD COLUMN phone VARCHAR(20) NOT NULL AFTER address;
+    ALTER TABLE orders ADD COLUMN payment_method VARCHAR(50) NOT NULL AFTER phone;
     comment TEXT,
     status VARCHAR(20) NOT NULL DEFAULT 'new',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
