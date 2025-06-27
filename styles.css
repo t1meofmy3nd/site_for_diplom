@@ -373,6 +373,12 @@ footer {
   box-shadow: var(--shadow);
   border-radius: var(--radius);
   padding: 20px;
+  transition: var(--transition);
+}
+
+.cart-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
 
 .cart-card img {
@@ -386,7 +392,15 @@ footer {
   flex: 1;
 }
 
-.cart-card button {
+.qty-input {
+  width: 60px;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-left: 4px;
+}
+
+.remove-item {
   background: var(--accent);
   color: #fff;
   border: none;
@@ -396,7 +410,7 @@ footer {
   transition: var(--transition);
 }
 
-.cart-card button:hover {
+.remove-item:hover {
   background: var(--primary);
 }
 
@@ -414,12 +428,33 @@ footer {
   margin-bottom: 0.5rem;
 }
 
+@media (min-width: 768px) {
+  .cart-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .cart-items {
+    flex: 2;
+  }
+  .cart-summary {
+    width: 320px;
+  }
+}
+
 .cta-button.full-width {
   display: block;
   width: 100%;
   text-align: center;
   margin-top: 12px;
 }
+.checkout-btn:hover {
+  transform: scale(1.03);
+}
+
+.checkout-btn i {
+  margin-right: 6px;
+}
+
 /* Services page */
 .page-hero {
   padding: 80px 20px;

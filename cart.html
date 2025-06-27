@@ -31,13 +31,13 @@
 <main class="cart-container">
   <h1>Корзина</h1>
   <div class="cart-content">
-    <div class="cart-items" id="cart-items"></div>
-    <div class="cart-summary">
-      <h2>Итого</h2>
-      <p id="total">Загрузка...</p>
-      <a href="checkout.php" class="cta-button full-width">Оформить заказ</a>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-summary">
+        <h2>Итого</h2>
+        <p id="total">Загрузка...</p>
+        <a href="checkout.php" class="cta-button checkout-btn full-width"><i class="fa-solid fa-receipt"></i> Оформить заказ</a>
+      </div>
     </div>
-  </div>
 </main>
 
 <footer>
@@ -71,15 +71,23 @@ function renderCart() {
       <div class="cart-card-info">
         <h3>${item.name}</h3>
         <p><strong>${item.price.toLocaleString()} ₽</strong></p>
-        <p>Кол-во: ${item.quantity}</p>
-        <button onclick="removeItem(${index})">Удалить</button>
+        <label>Кол-во: <input type="number" min="1" value="${item.quantity}" class="qty-input" data-index="${index}"></label>
       </div>
+      <button class="remove-item" onclick="removeItem(${index})" title="Удалить"><i class="fa-solid fa-trash"></i></button>
     `;
     container.appendChild(card);
   });
 
   totalEl.textContent = "Сумма: " + total.toLocaleString() + " ₽";
   localStorage.setItem("cart_total", total);
+  if (typeof updateCartCount === 'function') updateCartCount();
+}
+
+function updateQuantity(index, qty) {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  cart[index].quantity = qty > 0 ? qty : 1;
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
 }
 
 function removeItem(index) {
@@ -87,9 +95,18 @@ function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
+  if (typeof updateCartCount === 'function') updateCartCount();
 }
 
-document.addEventListener("DOMContentLoaded", renderCart);
+document.addEventListener("DOMContentLoaded", () => {
+  renderCart();
+  document.getElementById('cart-items').addEventListener('change', e => {
+    if (e.target.classList.contains('qty-input')) {
+      const index = parseInt(e.target.dataset.index);
+      updateQuantity(index, parseInt(e.target.value));
+    }
+  });
+});
 </script>
 <script src="header.js"></script>
 <script src="session.js"></script>
