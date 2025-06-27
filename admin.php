@@ -68,6 +68,7 @@ $stats = [
     </div>
     <div class="content">
         <div class="topbar">
+          <button class="menu-toggle" aria-label="Меню">&#9776;</button>
             <h1>Привет, <?= $adminName ?>!</h1>
         </div>
 
