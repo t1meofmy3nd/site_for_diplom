@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS orders (
     phone VARCHAR(20) NOT NULL,
     payment_method VARCHAR(50) NOT NULL,
     comment TEXT,
+    status VARCHAR(20) NOT NULL DEFAULT 'new',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
