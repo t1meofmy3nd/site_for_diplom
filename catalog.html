@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,7 +13,7 @@
   <a href="index.html" class="logo">
     <img src="images/logo.png" alt="МедТех" />
   </a>
-  <button class="menu-toggle" aria-label="Меню"><i class="fa-solid fa-bars"></i></button> 
+  <button class="menu-toggle" aria-label="Меню"><i class="fa-solid fa-bars"></i></button>
   <nav>
     <a href="index.html">Главная</a>
     <a href="catalog.html" class="active">Каталог</a>
@@ -28,32 +27,57 @@
   </nav>
 </header>
 
-<section class="filters-bar">
-  <input type="text" id="searchInput" placeholder="Поиск по названию" />
-  <select id="categoryFilter">
-    <option value="">Категория</option>
-    <option value="УЗИ">УЗИ</option>
-    <option value="Рентген">Рентген</option>
-    <option value="Дефибрилляторы">Дефибрилляторы</option>
-    <option value="ЭКГ">ЭКГ</option>
-    <option value="Мониторы">Мониторы</option>
-  </select>
-  <select id="sortSelect">
-    <option value="">Сортировка</option>
-    <option value="priceAsc">Цена: по возрастанию</option>
-    <option value="priceDesc">Цена: по убыванию</option>
-  </select>
-  <select id="priceFilter">
-    <option value="">Цена</option>
-    <option value="0-150000">до 150 000 ₽</option>
-    <option value="150000-250000">150 000 – 250 000 ₽</option>
-    <option value="250000-400000">250 000 – 400 000 ₽</option>
-  </select>
-  <button id="resetFilters">Сбросить</button>
-</section>
+<div class="catalog-container">
+  <aside class="filter-panel">
+    <div class="filter-group">
+      <h4>Категория</h4>
+      <ul>
+        <li><label><input type="checkbox" value="УЗИ" class="filter-category"> УЗИ</label></li>
+        <li><label><input type="checkbox" value="Рентген" class="filter-category"> Рентген</label></li>
+        <li><label><input type="checkbox" value="Дефибрилляторы" class="filter-category"> Дефибрилляторы</label></li>
+        <li><label><input type="checkbox" value="ЭКГ" class="filter-category"> ЭКГ</label></li>
+        <li><label><input type="checkbox" value="Мониторы" class="filter-category"> Мониторы</label></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <h4>Цена</h4>
+      <div class="price-range">
+        <input type="number" id="minPrice" placeholder="от">
+        <input type="number" id="maxPrice" placeholder="до">
+      </div>
+    </div>
+    <div class="filter-group">
+      <h4>Наличие</h4>
+      <label><input type="checkbox" id="stockOnly"> В наличии</label>
+    </div>
+    <div class="filter-group">
+      <h4>Бренд</h4>
+      <ul>
+        <li><label><input type="checkbox" value="Brand 1" class="filter-brand"> Brand 1</label></li>
+        <li><label><input type="checkbox" value="Brand 2" class="filter-brand"> Brand 2</label></li>
+        <li><label><input type="checkbox" value="Brand 3" class="filter-brand"> Brand 3</label></li>
+        <li><label><input type="checkbox" value="Brand 4" class="filter-brand"> Brand 4</label></li>
+        <li><label><input type="checkbox" value="Brand 5" class="filter-brand"> Brand 5</label></li>
+        <li><label><input type="checkbox" value="Brand 6" class="filter-brand"> Brand 6</label></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <h4>Популярность</h4>
+      <label><input type="checkbox" id="sortPopular"> Сначала популярные</label>
+    </div>
+    <button id="resetFilters" class="reset-btn"><i class="fa-solid fa-rotate-left"></i> Сбросить</button>
+  </aside>
 
-<p id="resultCount" style="text-align: center; margin-top: -10px;"></p>
-<section id="product-list" class="products-grid" style="padding: 0 20px;"></section>
+  <div class="catalog-content">
+    <button id="filtersBtn" class="filters-btn"><i class="fa-solid fa-filter"></i> Фильтры</button>
+    <div class="active-filters">
+      <input type="text" id="searchInput" placeholder="Поиск по названию" style="flex:1;min-width:150px;">
+      <span id="resultCount"></span>
+      <div id="filterTags" class="filters-tags"></div>
+    </div>
+    <section id="product-list" class="products-grid"></section>
+  </div>
+</div>
 
 <footer>
   &copy; 2025 МедТех. Все права защищены.
@@ -61,62 +85,98 @@
 
 <script src="products.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.getElementById("searchInput");
-  const categoryFilter = document.getElementById("categoryFilter");
-  const sortSelect = document.getElementById("sortSelect");
-  const priceFilter = document.getElementById("priceFilter");
-  const resetBtn = document.getElementById("resetFilters");
-  const count = document.getElementById("resultCount");
+function generateStars(rating) {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  let html = '<i class="fa-solid fa-star"></i>'.repeat(full);
+  if (half) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+  html += '<i class="fa-regular fa-star"></i>'.repeat(5 - full - (half ? 1 : 0));
+  return html;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('searchInput');
+  const categoryCheckboxes = document.querySelectorAll('.filter-category');
+  const brandCheckboxes = document.querySelectorAll('.filter-brand');
+  const minPrice = document.getElementById('minPrice');
+  const maxPrice = document.getElementById('maxPrice');
+  const stockOnly = document.getElementById('stockOnly');
+  const sortPopular = document.getElementById('sortPopular');
+  const resetBtn = document.getElementById('resetFilters');
+  const resultCount = document.getElementById('resultCount');
+  const filterTags = document.getElementById('filterTags');
+  const filtersBtn = document.getElementById('filtersBtn');
+  const filterPanel = document.querySelector('.filter-panel');
+  });
+  
+  if (filtersBtn) {
+    filtersBtn.addEventListener('click', () => filterPanel.classList.toggle('open'));
+  }
+
+    function getChecked(list) {
+    return Array.from(list).filter(i => i.checked).map(i => i.value);
+  }
+
+    function updateTags(tags) {
+    filterTags.innerHTML = '';
+    tags.forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = t;
+      filterTags.appendChild(span);
+    });
+  }
 
   function filterAndRender() {
-    let filtered = products;
+    let filtered = [...products];
+    const search = searchInput.value.trim().toLowerCase();
+    const categories = getChecked(categoryCheckboxes);
+    const brands = getChecked(brandCheckboxes);
+    const min = parseInt(minPrice.value) || 0;
+    const max = parseInt(maxPrice.value) || Infinity;
 
-    const query = searchInput.value.toLowerCase();
-    const category = categoryFilter.value;
-    const sort = sortSelect.value;
-    const price = priceFilter.value;
+    if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search));
+    if (categories.length) filtered = filtered.filter(p => categories.includes(p.category));
+    if (brands.length) filtered = filtered.filter(p => brands.includes(p.brand));
+    filtered = filtered.filter(p => p.price >= min && p.price <= max);
+    if (stockOnly.checked) filtered = filtered.filter(p => p.stock);
+    if (sortPopular.checked) filtered.sort((a,b) => b.rating - a.rating);
 
-    if (query) filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
-    if (category) filtered = filtered.filter(p => p.category === category);
-    
-    if (price) {
-      const [min, max] = price.split("-").map(Number);
-      filtered = filtered.filter(p => p.price >= min && p.price <= max);
-    }
+    resultCount.textContent = 'Найдено: ' + filtered.length;
+    updateTags([...categories, ...brands]);
 
-    if (sort === "priceAsc") filtered.sort((a, b) => a.price - b.price);
-    if (sort === "priceDesc") filtered.sort((a, b) => b.price - a.price);
-
-    const container = document.getElementById("product-list");
-    container.innerHTML = "";
-    count.textContent = "Найдено: " + filtered.length;
-
+    const container = document.getElementById('product-list');
+    container.innerHTML = '';
     filtered.forEach(product => {
-      const card = document.createElement("div");
-      card.className = "product-card";
+      const card = document.createElement('div');
+      card.className = 'product-card';
       card.innerHTML = `
         <img src="${product.img}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${product.price.toLocaleString()} ₽</p>
-        <button onclick="addToCart(${product.id})">В корзину</button>
+        <p class="desc">${product.description}</p>
+        <div class="rating">${generateStars(product.rating)}</div>
+        <p class="price">${product.price.toLocaleString()} ₽</p>
+        <p class="stock">${product.stock ? 'В наличии' : 'Нет в наличии'} • ${product.delivery}</p>
+        <button onclick="addToCart(${product.id})" class="add-btn"><i class="fa-solid fa-cart-plus"></i> В корзину</button>
       `;
       container.appendChild(card);
     });
   }
 
-  [searchInput, categoryFilter, priceFilter, sortSelect].forEach(el => {
-    el.addEventListener("input", filterAndRender);
-  });
+  [...categoryCheckboxes, ...brandCheckboxes, searchInput, minPrice, maxPrice, stockOnly, sortPopular].forEach(el => {
+    el.addEventListener('input', filterAndRender);
 
-  resetBtn.addEventListener("click", () => {
-    searchInput.value = "";
-    categoryFilter.value = "";
-    priceFilter.value = "";
-    sortSelect.value = "";
+  
     filterAndRender();
   });
-
+  resetBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    categoryCheckboxes.forEach(c => c.checked = false);
+    brandCheckboxes.forEach(c => c.checked = false);
+    minPrice.value = '';
+    maxPrice.value = '';
+    stockOnly.checked = false;
+    sortPopular.checked = false;
   filterAndRender();
 });
 </script>
