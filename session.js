@@ -6,6 +6,12 @@ function updateAuthLinks(basePath = '') {
         document.querySelectorAll('.logout-link').forEach(el => el.style.display = 'inline');
         document.querySelectorAll('.login-link').forEach(el => el.style.display = 'none');
         document.querySelectorAll('.register-link').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.account-link').forEach(el => el.style.display = 'inline');
+      } else {
+        document.querySelectorAll('.logout-link').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.login-link').forEach(el => el.style.display = 'inline');
+        document.querySelectorAll('.register-link').forEach(el => el.style.display = 'inline');
+        document.querySelectorAll('.account-link').forEach(el => el.style.display = 'none');
       }
     })
     .catch(() => {});

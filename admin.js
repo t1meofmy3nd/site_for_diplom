@@ -8,6 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const links = document.querySelectorAll('.sidebar a[data-section]');
   const sidebar = document.querySelector('.sidebar');
   const toggle = document.querySelector('.menu-toggle');
+  function applyStatusClass(select) {
+    select.className = 'status-select status-' + select.value;
+  }
 
   links.forEach(link => {
     link.addEventListener('click', e => {
@@ -18,11 +21,16 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-   if (toggle && sidebar) {
+  if (toggle && sidebar) {
     toggle.addEventListener('click', () => {
       sidebar.classList.toggle('open');
     });
   }
+
+  document.querySelectorAll('select[name="status"]').forEach(sel => {
+    applyStatusClass(sel);
+    sel.addEventListener('change', () => applyStatusClass(sel));
+  });
   
   const first = document.querySelector('.content section');
   if (first) showSection(first.id);

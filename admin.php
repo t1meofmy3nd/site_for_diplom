@@ -75,7 +75,7 @@ $stats = [
         <section id="orders">
             <h2>Заказы</h2>
             <form method="get" class="filters">
-                <select name="status" onchange="this.form.submit()">
+                <select name="status" class="status-select" onchange="this.form.submit()">
                   <option value="">Все</option>
                     <?php
                     foreach (["new"=>"Новый","processing"=>"В обработке","shipped"=>"Отправлен","completed"=>"Завершен","canceled"=>"Отменен"] as $val=>$label) {
@@ -112,7 +112,7 @@ $stats = [
                         <td>
                             <form method="post" style="margin:0;">
                                 <input type="hidden" name="order_id" value="<?= $o['id'] ?>">
-                                <select name="status" onchange="this.form.submit()">
+                                <select name="status" class="status-select" onchange="this.form.submit()">
                                 <?php
                                     $statuses = ["new"=>"Новый","processing"=>"В обработке","shipped"=>"Отправлен","completed"=>"Завершен","canceled"=>"Отменен"];
                                     foreach ($statuses as $val=>$label) {
