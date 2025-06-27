@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_regenerate_id(true);
         $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
         $stmt->execute([$username]);
-        $admin = $stmt->fetch();
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($admin && password_verify($password, $admin['password'])) {
             $_SESSION['admin'] = ['id' => $admin['id'], 'username' => $admin['username']];
