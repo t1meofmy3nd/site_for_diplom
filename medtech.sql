@@ -9,36 +9,78 @@ CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+       password VARCHAR(255) NOT NULL
+);
+
+-- Таблица администраторов
+CREATE TABLE IF NOT EXISTS admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Таблица товаров
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    details TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    image_01 VARCHAR(255),
+    image_02 VARCHAR(255),
+    image_03 VARCHAR(255)
+);
+
+-- Таблица корзины
+CREATE TABLE IF NOT EXISTS cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    pid INT,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    quantity INT,
+    image VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (pid) REFERENCES products(id) ON DELETE CASCADE
+);
+
+-- Таблица избранного
+CREATE TABLE IF NOT EXISTS wishlist (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    pid INT,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    image VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (pid) REFERENCES products(id) ON DELETE CASCADE
 );
 
 -- Таблица заказов
 CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    total_price DECIMAL(10,2),
+    name VARCHAR(100) NOT NULL,
+    number VARCHAR(20),
+    email VARCHAR(100),
+    method VARCHAR(50),
     address TEXT,
-    phone VARCHAR(20),
-    payment_method VARCHAR(20),
-    comment TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_products TEXT,
+    placed_on DATE,
+    total_price DECIMAL(10,2),
+    payment_status VARCHAR(50),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
--- Таблица админов
-CREATE TABLE IF NOT EXISTS admins (
+-- Таблица обратной связи
+CREATE TABLE IF NOT EXISTS messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+        user_id INT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    number VARCHAR(20),
+    message TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
--- Таблица товаров (опционально, т.к. они есть в products.js)
-CREATE TABLE IF NOT EXISTS products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    category VARCHAR(50),
-    brand VARCHAR(50),
-    price DECIMAL(10,2),
-    image VARCHAR(255)
-);
+
