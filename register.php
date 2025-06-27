@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p>Уже есть аккаунт? <a href="login.php">Войти</a></p>
   </div>
 
+  <script src="header.js"></script>
   <script src="session.js"></script>
 </body>
 </html>
