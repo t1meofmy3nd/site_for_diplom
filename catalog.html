@@ -71,7 +71,10 @@
   <div class="catalog-content">
     <button id="filtersBtn" class="filters-btn"><i class="fa-solid fa-filter"></i> Фильтры</button>
     <div class="active-filters">
-      <input type="text" id="searchInput" placeholder="Поиск по названию" style="flex:1;min-width:150px;">
+      <div class="search-wrapper">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" id="searchInput" class="search-input" placeholder="Поиск по названию">
+      </div>
       <span id="resultCount"></span>
       <div id="filterTags" class="filters-tags"></div>
     </div>
@@ -107,8 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterTags = document.getElementById('filterTags');
   const filtersBtn = document.getElementById('filtersBtn');
   const filterPanel = document.querySelector('.filter-panel');
-  });
-  
+
   if (filtersBtn) {
     filtersBtn.addEventListener('click', () => filterPanel.classList.toggle('open'));
   }
@@ -147,6 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const container = document.getElementById('product-list');
     container.innerHTML = '';
+
+     if (!filtered.length) {
+      container.innerHTML = '<p class="no-results">Товары не найдены</p>';
+      return;
+    }
+
     filtered.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
@@ -165,10 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   [...categoryCheckboxes, ...brandCheckboxes, searchInput, minPrice, maxPrice, stockOnly, sortPopular].forEach(el => {
     el.addEventListener('input', filterAndRender);
-
-  
-    filterAndRender();
   });
+
+  filterAndRender();
+
   resetBtn.addEventListener('click', () => {
     searchInput.value = '';
     categoryCheckboxes.forEach(c => c.checked = false);
@@ -177,7 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
     maxPrice.value = '';
     stockOnly.checked = false;
     sortPopular.checked = false;
-  filterAndRender();
+    filterAndRender();
+  });
 });
 </script>
 <script src="header.js"></script>
