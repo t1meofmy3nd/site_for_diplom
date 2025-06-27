@@ -28,31 +28,56 @@ body {
 }
 
 header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background: var(--primary);
-  color: white;
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.75rem 1.5rem;
+  box-shadow: var(--shadow);
 }
 
 header .logo img {
-  height: 80px;
+  height: 50px;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
 }
 
 nav a {
-  margin-left: 1.5rem;
-  color: white;
+  margin-left: 1rem;
+  color: #fff;
   text-decoration: none;
   font-weight: 500;
   transition: var(--transition);
-  padding: 8px 14px;
-  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px;
 }
 
 nav a:hover {
-  background: white;
-  color: var(--primary);
+  color: var(--accent);
+}
+
+nav a.active {
+  border-bottom: 2px solid var(--accent);
+}
+
+nav a .cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 0.7rem;
 }
 
 .hero {
@@ -448,7 +473,9 @@ footer {
 
 @media (max-width: 768px) {
   header {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
   header nav {
     display: none;
@@ -560,6 +587,10 @@ footer {
 }
 
 .account-header .logo img {
+  header nav {
+  display: flex;
+  align-items: center;
+}
   height: 60px;
 }
 
