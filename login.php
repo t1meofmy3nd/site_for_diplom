@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_regenerate_id(true);
             $_SESSION['user'] = ['id' => $user['id'], 'name' => $user['name'], 'email' => $user['email']];
             unset($_SESSION['csrf_token']);
-            header("Location: index.html");
+            header("Location: profile.php");
             exit;
         } else {
             $error = "Неверный email или пароль.";

@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$name, $email, $password_hash]);
             session_regenerate_id(true);
             $_SESSION['user'] = ['name' => $name, 'email' => $email];
-            header("Location: index.html");
+            header("Location: profile.php");
             unset($_SESSION['csrf_token']);
             exit;
         } catch (PDOException $e) {

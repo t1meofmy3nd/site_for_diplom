@@ -42,7 +42,7 @@ $labels = [
   <p><strong>Оплата:</strong> <?= htmlspecialchars($order['payment_method']) ?></p>
   <p><strong>Комментарий:</strong> <?= nl2br(htmlspecialchars($order['comment'])) ?></p>
   <p><strong>Дата:</strong> <?= $order['created_at'] ?></p>
-  <a href="account.php" class="btn-primary" style="max-width:200px;">Назад</a>
+  <a href="profile.php" class="btn-primary" style="max-width:200px;">Назад</a>
 </div>
 <script src="header.js"></script>
 <script src="session.js"></script>
