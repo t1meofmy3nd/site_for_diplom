@@ -13,6 +13,7 @@
 
 <div class="catalog-container">
   <aside class="filter-panel">
+    <button id="closeFilters" class="close-filters"><i class="fa-solid fa-xmark"></i></button>
     <div class="filter-group">
       <h4>Категория</h4>
       <ul>
@@ -26,8 +27,14 @@
     <div class="filter-group">
       <h4>Цена</h4>
       <div class="price-range">
-        <input type="number" id="minPrice" placeholder="от">
-        <input type="number" id="maxPrice" placeholder="до">
+        <div class="price-input">
+          <input type="number" id="minPrice" placeholder="от">
+          <span class="currency">₽</span>
+        </div>
+        <div class="price-input">
+          <input type="number" id="maxPrice" placeholder="до">
+          <span class="currency">₽</span>
+        </div>
       </div>
     </div>
     <div class="filter-group">
@@ -94,9 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterTags = document.getElementById('filterTags');
   const filtersBtn = document.getElementById('filtersBtn');
   const filterPanel = document.querySelector('.filter-panel');
+  const closeFilters = document.getElementById('closeFilters');
 
   if (filtersBtn) {
-    filtersBtn.addEventListener('click', () => filterPanel.classList.toggle('open'));
+    filtersBtn.addEventListener('click', () => filterPanel.classList.add('open'));
+  }
+  if (closeFilters) {
+    closeFilters.addEventListener('click', () => filterPanel.classList.remove('open'));
   }
 
     function getChecked(list) {
